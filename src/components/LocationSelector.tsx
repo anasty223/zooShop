@@ -1,6 +1,6 @@
 // components/LocationSelector.tsx
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { debounce } from "lodash"; // Импортируем debounce
 import { FaMapPin } from "react-icons/fa";
@@ -14,39 +14,43 @@ const LocationSelector: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   // Функция для запроса городов с debounce
-  const fetchCities = debounce(async (query: string) => {
-    if (!query.trim()) {
-      setCities([]);
-      return;
-    }
-
-    try {
-      const response = await axios.get(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities`,
-        {
-          params: {
-            namePrefix: query,
-            limit: 10,
-            sort: "-population",
-          },
-          headers: {
-            "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY ,
-            "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
-          },
-        }
-      );
-      const cityNames = response.data.data.map((city: any) => city.name);
-      setCities(cityNames);
-      setError(null);
-    } catch (err: any) {
-      if (err.response?.status === 429) {
-        setError("Превышен лимит запросов. Пожалуйста, подождите и попробуйте снова.");
-      } else {
-        setError("Ошибка при загрузке списка городов.");
+  const fetchCities = useCallback(
+    debounce(async (query: string) => {
+      if (!query.trim()) {
+        setCities([]);
+        return;
       }
-      console.error("API error:", err.message);
-    }
-  }, 500); // Задержка 500ms
+  
+      try {
+        const response = await axios.get(
+          "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
+          {
+            params: {
+              namePrefix: query,
+              limit: 10,
+              sort: "-population",
+            },
+            headers: {
+              "X-RapidAPI-Key": process.env.NEXT_PUBLIC_RAPIDAPI_KEY,
+              "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+            },
+          }
+        );
+        const cityNames = response.data.data.map((city: any) => city.name);
+        setCities(cityNames);
+        setError(null);
+      } catch (err: any) {
+        if (err.response?.status === 429) {
+          setError("Превышен лимит запросов. Пожалуйста, подождите и попробуйте снова.");
+        } else {
+          setError("Ошибка при загрузке списка городов.");
+        }
+        console.error("API error:", err.message);
+      }
+    }, 500),
+    []
+  );
+  
 
   // Вызываем fetchCities при изменении searchQuery
   useEffect(() => {
