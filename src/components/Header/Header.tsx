@@ -7,6 +7,9 @@ import { fontSize } from "@/style/fontSize";
 import LocationSelector from "../LocationSelector";
 import { MainWrapper } from "../ui/MainWrapper";
 import ChevronSVG from "@/assets/svg/outline-chevron_right.svg";
+import PhoneSVG from "@/assets/svg/bx-phone-call.svg.svg";
+import SearchSVG from "@/assets/svg/bx-search.svg.svg";
+import Link from "next/link";
 
 type Props = {};
 
@@ -27,7 +30,7 @@ const Header = (props: Props) => {
             <LocationSelector />
             <div className="flex gap-[25px] ">
               {" "}
-              <div className="flex gap-[25px] ">
+              <div className="flex gap-[25px] items-center">
                 {menuData.map((item) => (
                   <div
                     key={item.id}
@@ -37,12 +40,14 @@ const Header = (props: Props) => {
                   </div>
                 ))}
               </div>
-              <div className="relative">
+              <div className="relative flex items-center">
                 <div
                   className="flex gap-[3px] items-center cursor-pointer"
                   onClick={toggleDropdown}
                 >
-                  <button  className={`${fontSize.medium}  hover:text-[#FE9015]`} >
+                  <button
+                    className={`${fontSize.medium}  hover:text-[#FE9015]`}
+                  >
                     Ещё
                   </button>
 
@@ -65,13 +70,32 @@ const Header = (props: Props) => {
                   </div>
                 )}
               </div>
+              <div className="flex gap-[10px] items-center">
+                <PhoneSVG />
+                <Link href="tel: +3(3452)594945">+3 (3452) 59-49-45</Link>
+              </div>
+              <div
+                className={`${fontSize.medium_14} hover:text-[#FE9015] cursor-pointer`}
+              >
+                Заказать звонок
+              </div>
             </div>
           </div>
 
           {/* Логотип */}
-          <div className="mt-[8px]">
-          
-            <Logo />
+          <div className="flex items-center">
+            <div className="mt-[8px]">
+              <Logo />
+            </div>
+
+            <div className="relative w-full max-w-[641px] ml-[31px] mt-[10px]">
+              <input
+                type="text"
+                placeholder="Поиск по сайту"
+                className={`${fontSize.medium_16} w-full text-[#848992] h-[60px] border border-[#848992] outline-none pl-[20px] pr-[45px] rounded-sm`}
+              />
+              <SearchSVG className="absolute right-[15px] top-1/2 transform -translate-y-1/2 text-[#848992] cursor-pointer" />
+            </div>
           </div>
         </div>
       )}

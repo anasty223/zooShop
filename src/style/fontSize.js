@@ -1,7 +1,7 @@
 export const fontSize = {
     medium: "text-[12px]",
-    sm: "0.875rem",
-    base: "1rem",
+    medium_14: "text-[14px]",
+    medium_16: "text-[16px]",
     lg: "1.125rem",
     xl: "1.25rem",
     "2xl": "1.5rem",
