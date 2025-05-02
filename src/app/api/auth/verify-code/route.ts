@@ -1,25 +1,24 @@
-// route.ts
 import { NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import prisma from '../../../../../lib/prisma';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
 export async function POST(req: Request) {
-  const { email, code } = await req.json();
+  try {
+    const { email, code } = await req.json();
 
-  const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
 
-  if (!user || user.code !== code) {
-    return NextResponse.json({ error: 'Неверный код' }, { status: 401 });
+    if (!user || user.code !== code) {
+      return NextResponse.json({ success: false, error: 'Неверный код' }, { status: 401 });
+    }
+
+    const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!, {
+      expiresIn: '7d',
+    });
+
+    return NextResponse.json({ success: true, token });
+  } catch (error) {
+    console.error('Ошибка при проверке кода', error);
+    return NextResponse.json({ success: false, error: 'Ошибка сервера' }, { status: 500 });
   }
-
-  // Создаем токен
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    JWT_SECRET,
-    { expiresIn: '7d' }
-  );
-
-  return NextResponse.json({ token });
 }
