@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/Header/Header";
 
 
 
@@ -24,6 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
+      <Header/>
       <body
         className={` ${montserrat.variable} antialiased`}
       >

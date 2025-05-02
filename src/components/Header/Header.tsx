@@ -2,18 +2,25 @@
 
 import React, { useState } from "react";
 import Logo from "../ui/logo";
-import { menuData, menuDropdownData } from "@/data/menuData";
+import { menuData, menuDropdownData, submenuData } from "@/data/menuData";
 import { fontSize } from "@/style/fontSize";
 import LocationSelector from "../LocationSelector";
 import { MainWrapper } from "../ui/MainWrapper";
 import ChevronSVG from "@/assets/svg/outline-chevron_right.svg";
 import PhoneSVG from "@/assets/svg/bx-phone-call.svg.svg";
 import SearchSVG from "@/assets/svg/bx-search.svg.svg";
+import BasketSVG from "@/assets/svg/bx-basket.svg.svg";
+import BonusSVG from "@/assets/svg/bonus.svg";
+import VetclinicSVG from "@/assets/svg/vethclinic.svg";
 import Link from "next/link";
+import Profile from "../Profile";
+
+import { useRouter } from "next/navigation";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
@@ -88,13 +95,58 @@ const Header = (props: Props) => {
               <Logo />
             </div>
 
-            <div className="relative w-full max-w-[641px] ml-[31px] mt-[10px]">
+            <div className="relative w-full max-w-[641px] ml-[31px] mt-[10px] ">
               <input
                 type="text"
                 placeholder="Поиск по сайту"
-                className={`${fontSize.medium_16} w-full text-[#848992] h-[60px] border border-[#848992] outline-none pl-[20px] pr-[45px] rounded-sm`}
+                className={`${fontSize.medium_16} w-full text-[#848992] h-[60px] border border-[#C8CBD0] outline-none pl-[20px] pr-[45px] rounded-sm`}
               />
               <SearchSVG className="absolute right-[15px] top-1/2 transform -translate-y-1/2 text-[#848992] cursor-pointer" />
+            </div>
+            <div className="mt-[10px] cursor-pointer ml-[15px] border rounded-sm max-w-[148px] w-full h-[60px] border-[#C8CBD0] flex items-center justify-center">
+              {isLogin ? (
+                <Profile />
+              ) : (
+                <button
+                  onClick={() => router.push("/login")}
+                  className="text-[#FE9015] cursor-pointer"
+                >
+                  Login
+                </button>
+              )}
+            </div>
+            <div className="mt-[10px] cursor-pointer ml-[15px] border rounded-sm max-w-[133px] w-full h-[60px] border-[#C8CBD0] flex items-center justify-center">
+              <div className="relative flex items-center">
+                <BasketSVG />
+                <div className="ml-[10px] rounded-full bg-[#ED1C22] text-[12px] text-white w-[16px] h-[16px] flex items-center justify-center absolute top-[-10px] right-[-10px]">
+                  5
+                </div>
+              </div>
+              <div className="ml-[10px]">1150 UAH</div>
+            </div>
+          </div>
+          <div className="flex mt-[20px] items-center justify-between">
+            <div className="flex gap-[35px] ">
+              {submenuData.map((item) => (
+                <Link
+                  key={item.id}
+                  href={item?.path}
+                  className="flex items-center"
+                >
+                  {item.title}{" "}
+                  <span className="ml-[8px]">{item?.icon && <BonusSVG />}</span>
+                </Link>
+              ))}
+            </div>
+            <div className="flex gap-[35px]">
+         
+              <Link href={"/franchise"}>Франчайзинг</Link>
+              <Link href={"/vetchling"} className="flex items-center">
+                Ветклиника
+                <span className="ml-[8px]">
+                  <VetclinicSVG />
+                </span>
+              </Link>
             </div>
           </div>
         </div>
