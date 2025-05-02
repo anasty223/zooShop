@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { fontSize } from '@/style/fontSize';
+import { useRouter } from 'next/navigation';
 
 type Props = {};
 
 const Login = (props: Props) => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [codeIsSend, setIsCodeSend] = useState(false);
@@ -47,7 +49,7 @@ const Login = (props: Props) => {
       setCodeError('Введите полный 6-значный код');
       return;
     }
-
+  
     try {
       const res = await fetch('/api/auth/verify-code', {
         method: 'POST',
@@ -56,13 +58,18 @@ const Login = (props: Props) => {
         },
         body: JSON.stringify({ email, code: fullCode }),
       });
-
+  
       const data = await res.json();
-console.log(data);
-
+  
       if (data.success) {
+        console.log('Код подтверждён', data);
+        
+        // Сохраняем токен в localStorage (или в куки)
+        localStorage.setItem('token', data.token); // Можно также использовать cookies
+  
         alert('Код успешно подтверждён!');
-        // Здесь можно перенаправить пользователя или выполнить другие действия
+        // Переход в личный кабинет
+        router.push('/dashboard');
       } else {
         throw new Error(data.error || 'Неверный код');
       }
@@ -70,6 +77,7 @@ console.log(data);
       setCodeError(err.message);
     }
   };
+  
 
   const handleCodeChange = (value, index) => {
     const newCode = [...code];
