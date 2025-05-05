@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import React from 'react';
 
-type Props = {};
 
-const Logo = (props: Props) => {
+
+const Logo = () => {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center  w-[161px]">
       <Image
         src="/images/logo.png"
         alt="logo"

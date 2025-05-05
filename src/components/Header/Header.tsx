@@ -17,9 +17,9 @@ import Profile from "../Profile";
 
 import { useRouter } from "next/navigation";
 
-type Props = {};
 
-const Header = (props: Props) => {
+
+const Header = () => {
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -32,7 +32,7 @@ const Header = (props: Props) => {
       {isLogin ? (
         <h1>Logout</h1>
       ) : (
-        <div className="flex flex-col py-[15px] mx-auto">
+        <div className="flex flex-col py-[15px] mx-auto w-full">
           <div className=" flex items-center gap-[54px]">
             <LocationSelector />
             <div className="flex gap-[25px] ">
@@ -95,7 +95,7 @@ const Header = (props: Props) => {
               <Logo />
             </div>
 
-            <div className="relative w-full max-w-[641px] ml-[31px] mt-[10px] ">
+            <div className="relative w-full  ml-[31px] mt-[10px] ">
               <input
                 type="text"
                 placeholder="Поиск по сайту"
