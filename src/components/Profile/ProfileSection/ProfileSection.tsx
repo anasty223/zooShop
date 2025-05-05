@@ -1,21 +1,20 @@
 import React from 'react'
 
-type Props = {
+interface Props {
     formData: {
-        name: string;
-        address: string;
-        orderSource: string;
-        password: string;
-        phone: string;
-        email: string;
-    };
-    errors: {
-        address: string;
+      name: string;
+      address: { id: number; value: string }[];
+      orderSource: string;
+      password: string;
+      phone: string;
+      email: string;
     };
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-}
-
+    errors: {
+      address: string[];
+    };
+  }
 const ProfileSection = ({formData,  handleChange}:Props) => {
   return (
    <div className='max-w-[400px]'>

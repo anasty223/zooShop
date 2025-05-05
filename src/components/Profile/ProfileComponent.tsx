@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MainWrapper } from "../ui/MainWrapper";
 import { fontSize } from "../../style/fontSize";
 import ProfileSection from "./ProfileSection/ProfileSection";
-import DeleteSVG from "@/assets/svg/delete.svg";
+
 import HistorySection from "./HistorySection/HistorySection";
 
 const ProfileComponent = () => {
@@ -16,13 +16,15 @@ const ProfileComponent = () => {
     email: "myname@mail.ru",
   });
 
-  const [errors, setErrors] = useState({
+  const [errors, setErrors] = useState<{
+    address: string[];
+  }>({
     address: [],
   });
 
   const [activeTab, setActiveTab] = useState("profile");
 
-  const handleChange = (e, index) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const { name, value } = e.target;
     if (name.startsWith("address-")) {
       const newAddresses = [...formData.address];
@@ -37,7 +39,7 @@ const ProfileComponent = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const hasErrors = formData.address.some((addr, index) => {
       const error = addr.value.trim() ? "" : "Укажите адрес доставки";
@@ -64,7 +66,7 @@ const ProfileComponent = () => {
     }));
   };
 
-  const removeAddress = (id) => {
+  const removeAddress = (id: number) => {
     const newAddresses = formData.address.filter((addr) => addr.id !== id);
     const newErrors = errors.address.filter(
       (_, index) => formData.address[index].id !== id
@@ -77,7 +79,7 @@ const ProfileComponent = () => {
     { id: "profile", label: "Учетная запись" },
     { id: "address", label: "Адреса доставки" },
     { id: "history", label: "История заказов" },
-    { id: "password", label: "Смена пароля" },
+   
     { id: "logout", label: "Выйти" },
   ];
 
@@ -106,7 +108,7 @@ const ProfileComponent = () => {
               {activeTab === "profile" && (
                 <ProfileSection
                   formData={formData}
-                  handleChange={handleChange}
+                  handleChange={(e) => handleChange(e, 0)} 
                   handleSubmit={handleSubmit}
                   errors={errors}
                 />
@@ -161,9 +163,8 @@ const ProfileComponent = () => {
               )}
               {activeTab === "history" && (
                 <HistorySection
-                  formData={formData}
-                  handleChange={handleChange}
-                  handleSubmit={handleSubmit}
+             
+              
                 />
               )}
             </form>
