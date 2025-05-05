@@ -11,7 +11,7 @@ type Props = {
 
 const AddressSection = ({ formData, errors, handleChange, handleRemove, index }: Props) => {
   return (
-    <div className="mb-[20px] flex items-center gap-[10px]">
+    <div className="mb-[20px] flex items-center gap-[10px] max-w-[400px]">
       <div className="flex-1">
         <label className="text-[#848992] text-[14px] mb-[5px] block">
           Адрес {index + 1}{" "}

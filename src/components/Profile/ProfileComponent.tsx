@@ -16,9 +16,7 @@ const ProfileComponent = () => {
     email: "myname@mail.ru",
   });
 
-  const [errors, setErrors] = useState<{
-    address: string[]; // Массив ошибок для каждого адреса
-  }>({
+  const [errors, setErrors] = useState({
     address: [],
   });
 
@@ -26,14 +24,17 @@ const ProfileComponent = () => {
 
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    const newAddresses = [...formData.address];
-    newAddresses[index].value = value;
+    if (name.startsWith("address-")) {
+      const newAddresses = [...formData.address];
+      newAddresses[index].value = value;
+      setFormData((prev) => ({ ...prev, address: newAddresses }));
 
-    setFormData((prev) => ({ ...prev, address: newAddresses }));
-
-    const newErrors = [...errors.address];
-    newErrors[index] = value.trim() ? "" : "Укажите адрес доставки";
-    setErrors((prev) => ({ ...prev, address: newErrors }));
+      const newErrors = [...errors.address];
+      newErrors[index] = value.trim() ? "" : "Укажите адрес доставки";
+      setErrors((prev) => ({ ...prev, address: newErrors }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -101,7 +102,7 @@ const ProfileComponent = () => {
             ))}
           </div>
           <div className="flex-1">
-            <form onSubmit={handleSubmit} className="max-w-[400px]">
+            <form onSubmit={handleSubmit} className="">
               {activeTab === "profile" && (
                 <ProfileSection
                   formData={formData}
@@ -111,13 +112,13 @@ const ProfileComponent = () => {
                 />
               )}
               {activeTab === "address" && (
-                <div className="text-[16px]">
+                <div className="text-[16px] max-w-[400px]">
                   {formData.address.map((addr, index) => (
                     <div
                       key={addr.id}
                       className="mb-[20px] flex items-center gap-[10px]"
                     >
-                      <div className="flex-1 items-end">
+                      <div className="flex-1">
                         <label className="text-[#848992] text-[14px] mb-[5px] block">
                           Адрес {index + 1}{" "}
                           {errors.address[index] && (
@@ -126,29 +127,27 @@ const ProfileComponent = () => {
                             </span>
                           )}
                         </label>
-                        <div className="flex items-center">
-                          {" "}
-                          <input
-                            type="text"
-                            name={`address-${index}`}
-                            value={addr.value}
-                            onChange={(e) => handleChange(e, index)}
-                            className={`w-full h-[40px] px-[10px] border rounded-[4px] text-[14px] ${
-                              errors.address[index]
-                                ? "border-red-500"
-                                : "border-[#C8CBD0]"
-                            }`}
-                          />
-                        </div>
-                        {formData.address.length > 1 && (
-                          <div
-                            className="flex items-center gap-[10px] mt-[10px]"
-                            onClick={() => removeAddress(addr.id)}
-                          >
-                            <DeleteSVG /> <span>Удалить</span>
-                          </div>
-                        )}
+                        <input
+                          type="text"
+                          name={`address-${index}`}
+                          value={addr.value}
+                          onChange={(e) => handleChange(e, index)}
+                          className={`w-full h-[40px] px-[10px] border rounded-[4px] text-[14px] ${
+                            errors.address[index]
+                              ? "border-red-500"
+                              : "border-[#C8CBD0]"
+                          }`}
+                        />
                       </div>
+                      {formData.address.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeAddress(addr.id)}
+                          className="w-[100px] h-[40px] bg-red-500 text-white rounded-[4px] text-[14px] hover:bg-red-600 transition-colors"
+                        >
+                          Удалить
+                        </button>
+                      )}
                     </div>
                   ))}
                   <button

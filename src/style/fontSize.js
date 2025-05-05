@@ -4,7 +4,7 @@ export const fontSize = {
     medium_16: "text-[16px]",
     medium_24: "text-[24px]",
     bold: "text-[24px] font-bold",
-    xl: "1.25rem",
+    bold_20: "text-[20px] font-bold",
     "2xl": "1.5rem",
     "3xl": "1.875rem",
     "4xl": "2.25rem",

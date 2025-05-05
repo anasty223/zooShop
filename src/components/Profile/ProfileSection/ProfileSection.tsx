@@ -18,7 +18,7 @@ type Props = {
 
 const ProfileSection = ({formData,  handleChange}:Props) => {
   return (
-   <div>
+   <div className='max-w-[400px]'>
                 <div className="mb-[20px]">
                   <label className="text-[#848992] text-[14px] mb-[5px] block">
                     Имя
