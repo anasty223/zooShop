@@ -11,7 +11,7 @@ const HistorySection = () => {
       date: "01/06/2020",
       number: "№ 10662",
       status: "В обработке",
-      amount: "3 товара 3651 Р",
+      amount: "3 товара 3651 UAH",
       order: [
         {
           id: 1,
@@ -38,16 +38,16 @@ const HistorySection = () => {
           model: 33053,
         },
       ],
-      address: "г. Москва, ул. Ленина, д. 1",
+      address: "г. Киев, ул. Крещатик, д. 1",
       comment: "Укажите точный адрес доставки",
     },
     {
       date: "01/06/2020",
-      address: "г. Москва, ул. Ленина, д. 1",
+      address: "г. Киев, ул. Крещатик, д. 1",
       comment: "Укажите точный адрес доставки",
       number: "№ 10662",
       status: "Доставлен",
-      amount: "3 товара 3651 Р",
+      amount: "3 товара 3651 UAH",
       order: [
         {
           id: 1,
@@ -79,9 +79,9 @@ const HistorySection = () => {
       date: "01/06/2020",
       number: "№ 10662",
       status: "Отменен",
-      address: "г. Москва, ул. Ленина, д. 1",
+      address: "г. Киев, ул. Крещатик, д. 1",
       comment: "Укажите точный адрес доставки",
-      amount: "3 товара 3651 Р",
+      amount: "3 товара 3651 UAH",
       order: [
         {
           id: 1,
@@ -111,11 +111,11 @@ const HistorySection = () => {
     },
     {
       date: "01/06/2020",
-      address: "г. Москва, ул. Ленина, д. 1",
+      address: "г. Киев, ул. Крещатик, д. 1",
       comment: "Укажите точный адрес доставки",
       number: "№ 10662",
       status: "Доставлен",
-      amount: "3 товара 3651 Р",
+      amount: "3 товара 3651 UAH",
       order: [
         {
           id: 1,
@@ -146,10 +146,10 @@ const HistorySection = () => {
     {
       date: "01/06/2020",
       number: "№ 10662",
-      address: "г. Москва, ул. Ленина, д. 1",
+      address: "г. Киев, ул. Крещатик, д. 1",
       comment: "Укажите точный адрес доставки",
       status: "Доставлен",
-      amount: "3 товара 3651 Р",
+      amount: "3 товара 3651 UAH",
       order: [
         {
           id: 1,
@@ -246,14 +246,14 @@ const HistorySection = () => {
                       Модель: {item.model}
                     </p>
                     <p className="text-[#848992] text-[14px]">
-                      {item.count} x {item.price} Р
+                      {item.count} x {item.price} UAH
                     </p>
                   </div>
                 </div>
               ))}
               <div className="mt-[10px] text-right">
                 <p className="text-[#848992] text-[14px] font-medium">
-                  Итого: {calculateOrderTotal(order.order)} Р
+                  Итого: {calculateOrderTotal(order.order)} UAH
                 </p>
               </div>
               <div className="mt-[10px] text-right">

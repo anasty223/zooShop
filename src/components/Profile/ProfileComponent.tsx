@@ -95,9 +95,10 @@ const ProfileComponent = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`cursor-pointer text-[14px] rounded-[4px] mb-[10px] ${
                   activeTab === tab.id
-                    ? `${fontSize.medium_16} text-black font-bold`
-                    : `${fontSize.medium_16} text-black font-medium`
-                }`}
+                    ? `${fontSize.medium_16}  font-bold`
+                    : `${fontSize.medium_16}  font-medium`
+
+                } ${tab.id === "logout" ? "text-red-500" : "text-black"} `}
               >
                 {tab.label}
               </div>
