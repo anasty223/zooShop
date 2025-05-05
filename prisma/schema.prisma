@@ -8,14 +8,17 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique   // ✅ теперь Prisma сможет использовать email в upsert
-  code      String
-  createdAt DateTime @default(now()) @map("created_at")
-
-  @@map("Users") // ← если таблица называется Users, оставляем
+  id        String   @id @default(uuid())
+  email     String   @unique
+  code      String?
+  createdAt DateTime @default(now())
+  profile   Profile?
 }
 
-
-
-
+model Profile {
+  id        String   @id @default(uuid())
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  name      String?
+  createdAt DateTime @default(now())
+}

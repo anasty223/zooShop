@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fontSize } from "@/style/fontSize";
 import { useRouter } from "next/navigation";
 
@@ -72,6 +72,7 @@ const Login = () => {
 
         if (firstLogin) {
           router.push("/profile");
+          
         } else router.push("/dashboard");
       } else {
         throw new Error(data.error || "Неверный код");
@@ -84,7 +85,41 @@ const Login = () => {
       }
     }
   };
-
+  const fetchProfile = async () => {
+    const token = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('token='))
+      ?.split('=')[1]; // Извлекаем токен из куки
+  
+    if (!token) {
+      console.error('Токен не найден');
+      return;
+    }
+  
+    try {
+      const res = await fetch('/api/auth/profile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      const data = await res.json();
+  
+      if (data.success) {
+        console.log('Профиль получен:', data.user);
+        // Здесь ты можешь сохранить данные профиля в состоянии или передать их на страницу
+      } else {
+        console.error('Ошибка при получении профиля:', data.error);
+      }
+    } catch (err) {
+      console.error('Ошибка при отправке запроса:', err);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);  // Вызываем fetchProfile при монтировании компонента
+  
   const handleCodeChange = (value: string, index: number) => {
     const newCode = [...code];
     newCode[index] = value;

@@ -1,30 +1,30 @@
-import { NextResponse } from 'next/server';
-import prisma from '../../../../../lib/prisma'; // Путь к prisma
-import { verifyToken } from '../../../../../src/middleware'; // Путь к middleware
+// src/app/api/profile/route.ts
 
-export async function GET(req: Request) {
+import { NextRequest, NextResponse } from 'next/server';
+import prisma from '../../../../../lib/prisma';
+import jwt from 'jsonwebtoken';
+
+export async function GET(req: NextRequest) {
+  const token = req.headers.get('authorization')?.replace('Bearer ', '');
+
+  if (!token) {
+    return NextResponse.json({ error: 'Нет токена' }, { status: 401 });
+  }
+
   try {
-    // Проверяем токен
-    const decoded = verifyToken(req);
-    
-    // Если токен невалидный, сразу вернется ошибка из middleware
-    if (!decoded) {
-      return NextResponse.json({ success: false, error: 'Не удалось авторизоваться' }, { status: 401 });
-    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
 
-    // Ищем пользователя по ID, который мы получили из декодированного токена
     const user = await prisma.user.findUnique({
       where: { id: decoded.id },
-      select: { id: true, email: true, created_at: true }, // Возвращаем только нужные поля
+      include: { profile: true },
     });
 
     if (!user) {
-      return NextResponse.json({ success: false, error: 'Пользователь не найден' }, { status: 404 });
+      return NextResponse.json({ error: 'Пользователь не найден' }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, user });
-  } catch (error) {
-    console.error('Ошибка при получении профиля', error);
-    return NextResponse.json({ success: false, error: 'Ошибка сервера' }, { status: 500 });
+    return NextResponse.json({ user });
+  } catch (err) {
+    return NextResponse.json({ error: 'Неверный токен' }, { status: 401 });
   }
 }

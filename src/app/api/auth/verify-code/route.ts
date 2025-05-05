@@ -12,6 +12,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, error: 'Неверный код' }, { status: 401 });
     }
 
+    // ✅ Создаём профиль, если его ещё нет
+    const existingProfile = await prisma.profile.findUnique({
+      where: { userId: user.id },
+    });
+
+    if (!existingProfile) {
+      await prisma.profile.create({
+        data: {
+          userId: user.id,
+        },
+      });
+    }
+
     const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET!, {
       expiresIn: '7d',
     });
