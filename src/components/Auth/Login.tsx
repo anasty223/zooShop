@@ -106,16 +106,18 @@ const Login = () => {
   
       const data = await res.json();
   
-      if (data.success) {
+      if (res.ok && data.success) {
         console.log('Профиль получен:', data.user);
         // Здесь ты можешь сохранить данные профиля в состоянии или передать их на страницу
       } else {
-        console.error('Ошибка при получении профиля:', data.error);
+        // Обрабатываем ошибки, если они есть
+        // console.error('Ошибка при получении профиля:', data.error || 'Неизвестная ошибка');
       }
     } catch (err) {
       console.error('Ошибка при отправке запроса:', err);
     }
   };
+  
   useEffect(() => {
     fetchProfile();
   }, []);  // Вызываем fetchProfile при монтировании компонента
