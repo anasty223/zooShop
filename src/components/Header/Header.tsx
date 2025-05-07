@@ -16,17 +16,20 @@ import Link from "next/link";
 import Profile from "../Profile";
 
 import { useRouter } from "next/navigation";
-
-
+import { useGetProfileQuery } from "@/store/api/userApi";
 
 const Header = () => {
+  const { data, error, isLoading } = useGetProfileQuery();
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+  if (isLoading) return <div>Загрузка...</div>;
+  if (error) return <div>Ошибка при загрузке профиля</div>;
 
+  console.log("Profile data:", data);
   return (
     <MainWrapper>
       {isLogin ? (
@@ -36,7 +39,6 @@ const Header = () => {
           <div className=" flex items-center gap-[54px]">
             <LocationSelector />
             <div className="flex gap-[25px] ">
-              {" "}
               <div className="flex gap-[25px] items-center">
                 {menuData.map((item) => (
                   <div
@@ -103,18 +105,23 @@ const Header = () => {
               />
               <SearchSVG className="absolute right-[15px] top-1/2 transform -translate-y-1/2 text-[#848992] cursor-pointer" />
             </div>
-            <div className="mt-[10px] cursor-pointer ml-[15px] border rounded-sm max-w-[148px] w-full h-[60px] border-[#C8CBD0] flex items-center justify-center">
-              {isLogin ? (
-                <Profile />
-              ) : (
-                <button
-                  onClick={() => router.push("/login")}
-                  className="text-[#FE9015] cursor-pointer"
-                >
-                  Login
-                </button>
-              )}
-            </div>
+            <div
+  className={`mt-[10px] cursor-pointer ml-[15px] border rounded-sm h-[60px] border-[#C8CBD0] flex items-center justify-center px-[10px] ${
+    data?.user?.email ? "max-w-full inline-flex" : "w-[148px]"
+  }`}
+>
+  {isLogin ? (
+    <Profile />
+  ) : (
+    <button
+      onClick={() => router.push("/login")}
+      className="text-[#FE9015] cursor-pointer truncate text-ellipsis overflow-hidden whitespace-nowrap"
+    >
+      {data?.user?.email ? data.user.email : "Login"}
+    </button>
+  )}
+</div>
+
             <div className="mt-[10px] cursor-pointer ml-[15px] border rounded-sm max-w-[133px] w-full h-[60px] border-[#C8CBD0] flex items-center justify-center">
               <div className="relative flex items-center">
                 <BasketSVG />
@@ -139,7 +146,6 @@ const Header = () => {
               ))}
             </div>
             <div className="flex gap-[35px]">
-         
               <Link href={"/franchise"}>Франчайзинг</Link>
               <Link href={"/vetchling"} className="flex items-center">
                 Ветклиника
