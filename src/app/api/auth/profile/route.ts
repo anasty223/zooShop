@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     }
 
     return NextResponse.json({ user });
-  } catch (err) {
+  } catch {
     return NextResponse.json({ error: 'Неверный токен' }, { status: 401 });
   }
 }

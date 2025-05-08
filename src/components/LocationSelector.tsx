@@ -36,16 +36,17 @@ const LocationSelector: React.FC = () => {
             },
           }
         );
-        const cityNames = response.data.data.map((city: any) => city.name);
+        type City = { name: string };
+        const cityNames = response.data.data.map((city: City) => city.name);
         setCities(cityNames);
         setError(null);
-      } catch (err: any) {
-        if (err.response?.status === 429) {
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err) && err.response?.status === 429) {
           setError("Превышен лимит запросов. Пожалуйста, подождите и попробуйте снова.");
         } else {
           setError("Ошибка при загрузке списка городов.");
         }
-        console.error("API error:", err.message);
+        console.error("API error:", (err as Error).message);
       }
     }, 500),
     []
@@ -89,7 +90,7 @@ const LocationSelector: React.FC = () => {
         className="flex items-center gap-1 text-black hover:text-gray-600 cursor-pointer focus:outline-none"
       >
         <FaMapPin className="text-orange-500 h-5 w-5" />
-        <span className={fontSize.base}>
+        <span className={fontSize.medium_16}>
           {selectedCity || "Выбрать город"}
         </span>
       </button>
@@ -119,7 +120,7 @@ const LocationSelector: React.FC = () => {
                   onClick={() => handleCitySelect(city)}
                   className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                 >
-                  <span className={fontSize.sm}>{city}</span>
+                  <span className={fontSize.medium}>{city}</span>
                 </div>
               ))}
             </div>
