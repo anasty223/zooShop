@@ -73,12 +73,7 @@ const ProfileSection = ({formData,  handleChange}:Props) => {
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="w-full h-[50px] bg-[#FE9015] text-white rounded-[4px] text-[16px] font-medium hover:bg-[#E88214] transition-colors"
-                >
-                  Сохранить
-                </button>
+           
                 </div>
              
   )

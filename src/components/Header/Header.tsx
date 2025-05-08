@@ -106,21 +106,21 @@ const Header = () => {
               <SearchSVG className="absolute right-[15px] top-1/2 transform -translate-y-1/2 text-[#848992] cursor-pointer" />
             </div>
             <div
-  className={`mt-[10px] cursor-pointer ml-[15px] border rounded-sm h-[60px] border-[#C8CBD0] flex items-center justify-center px-[10px] ${
-    data?.user?.email ? "max-w-full inline-flex" : "w-[148px]"
-  }`}
->
-  {isLogin ? (
-    <Profile />
-  ) : (
-    <button
-      onClick={() => router.push("/login")}
-      className="text-[#FE9015] cursor-pointer truncate text-ellipsis overflow-hidden whitespace-nowrap"
-    >
-      {data?.user?.email ? data.user.email : "Login"}
-    </button>
-  )}
-</div>
+              className={`mt-[10px] cursor-pointer ml-[15px] border rounded-sm h-[60px] border-[#C8CBD0] flex items-center justify-center px-[10px] ${
+                data?.user?.email ? "max-w-full inline-flex" : "w-[148px]"
+              }`}
+            >
+              {isLogin ? (
+                <Profile />
+              ) : (
+                <button
+                  onClick={() => router.push("/login")}
+                  className="text-[#FE9015] cursor-pointer truncate text-ellipsis overflow-hidden whitespace-nowrap"
+                >
+                  {data?.user?.email ? data.user.email : "Login"}
+                </button>
+              )}
+            </div>
 
             <div className="mt-[10px] cursor-pointer ml-[15px] border rounded-sm max-w-[133px] w-full h-[60px] border-[#C8CBD0] flex items-center justify-center">
               <div className="relative flex items-center">

@@ -20,6 +20,8 @@ model Profile {
   userId    String   @unique
   user      User     @relation(fields: [userId], references: [id])
   name      String?
-  
+  phone     String?   // добавь это
+  address   String[]  // и это, если тоже используешь
   createdAt DateTime @default(now())
 }
+
