@@ -19,15 +19,15 @@ import { useRouter } from "next/navigation";
 import { useGetProfileQuery } from "@/store/api/userApi";
 
 const Header = () => {
-  const { data, error, isLoading } = useGetProfileQuery();
+  const { data} = useGetProfileQuery();
   const router = useRouter();
   const [isLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-  if (isLoading) return <div>Загрузка...</div>;
-  if (error) return <div>Ошибка при загрузке профиля</div>;
+  // if (isLoading) return <div>Загрузка...</div>;
+  // if (error) return <div>Ошибка при загрузке профиля</div>;
 
   console.log("Profile data:", data);
   return (
