@@ -20,14 +20,7 @@ const AuthPage = () => {
         >
           Вход
         </button>
-        {/* <button
-          onClick={() => setIsLogin(false)}
-          className={`px-4 py-2 mx-1 border-b-[4px] ${
-            !isLogin ?  `${fontSize.bold} border-black text-black ` : `border-transparent ${fontSize.medium_24} `
-          }`}
-        >
-          Регистрация
-        </button> */}
+   
       </div>
 
       <div className="">
