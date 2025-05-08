@@ -21,7 +21,7 @@ import { useGetProfileQuery } from "@/store/api/userApi";
 const Header = () => {
   const { data, error, isLoading } = useGetProfileQuery();
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

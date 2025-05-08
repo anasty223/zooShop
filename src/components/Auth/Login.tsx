@@ -9,7 +9,7 @@ const Login = () => {
   const [codeIsSend, setIsCodeSend] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]); // Состояние для 6-значного кода
   const [codeError, setCodeError] = useState("");
-  const [firstLogin, setIsFirstLogin] = useState(true);
+  const [firstLogin] = useState(true);
   const validateEmail = (value: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(value)) {

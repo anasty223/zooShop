@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import { fontSize } from "@/style/fontSize";
 
-type Props = {};
 
-const Register = (props: Props) => {
+const Register = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 

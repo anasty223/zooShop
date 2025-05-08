@@ -4,9 +4,9 @@ import Login from './Login'
 import Register from './Register'
 import { fontSize } from '@/style/fontSize'
 
-type Props = {}
 
-const AuthPage = (props: Props) => {
+
+const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true)
 
   return (
