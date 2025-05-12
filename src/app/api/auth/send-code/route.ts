@@ -4,6 +4,7 @@ import { createOrUpdateUser } from '../../../../../lib/user' // ← подклю
 
 export async function POST(req: Request) {
   const { email } = await req.json()
+  console.log('DATABASE_URL', process.env.DATABASE_URL)
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!email || !emailRegex.test(email)) {
